@@ -1,0 +1,14 @@
+version: "3"
+
+services:
+  mongo-backup:
+    image: backuptools/mysql-backup-s3
+    build: .
+    environment:
+      - S3_BUCK=mysql1-backups
+      - S3_NAME=folder-name/backup-name-prefix
+      - S3_URI=https://s3-key:s3-secret@s3.host.tld
+      - MYSQL_USER=user
+      - MYSQL_PASSWORD=password
+      - MYSQL_HOST=host-or-service-name
+      - MYSQL_PORT=3307

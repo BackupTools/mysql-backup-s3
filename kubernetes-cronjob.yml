@@ -1,0 +1,33 @@
+---
+apiVersion: batch/v1beta1
+kind: CronJob
+metadata:
+  name: my-postgres-backup
+spec:
+  schedule: "5 */8 * * *"
+  concurrencyPolicy: Replace
+  startingDeadlineSeconds: 200
+  successfulJobsHistoryLimit: 2
+  failedJobsHistoryLimit: 10
+  jobTemplate:
+    spec:
+      template:
+        spec:
+          restartPolicy: OnFailure
+          containers:
+          - name: postgres-backup-my-app
+            image: backuptools/mysql-backup-s3
+            env:
+              - name: S3_URI
+                value: https://your-key:your-secret@s3.host.tld
+              - name: S3_NAME
+                value: folder-name/backup-name
+              - name: S3_BUCK
+                value: backup-s3-bucket-name
+              - name: MYSQL_USER
+                value: user
+              - name: MYSQL_PASSWORD
+                value: password
+              - name: MYSQL_HOST
+                value: host-or-service-name
+---
