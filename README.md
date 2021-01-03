@@ -1,6 +1,6 @@
 # MySQL/MariaDB S3 docker/kubernetes backup
 
-[![Build status](https://github.com/BackupTools/postgres-backup-s3/workflows/Docker%20Image%20CI/badge.svg)]() [![Pulls](https://img.shields.io/docker/pulls/backuptools/postgres-backup-s3?style=flat&labelColor=1B3D4B&color=06A64F&logoColor=white&logo=docker&label=pulls)]()
+[![Build status](https://github.com/BackupTools/mysql-backup-s3/workflows/Docker%20Image%20CI/badge.svg)]() [![Pulls](https://img.shields.io/docker/pulls/backuptools/mysql-backup-s3?style=flat&labelColor=1B3D4B&color=06A64F&logoColor=white&logo=docker&label=pulls)]()
 
 Docker image to backup MySQL or MariaDB (or PerconaDB) database to S3 using mysqldump and compress using pigz.
 
