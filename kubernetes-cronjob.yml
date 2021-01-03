@@ -2,7 +2,7 @@
 apiVersion: batch/v1beta1
 kind: CronJob
 metadata:
-  name: my-postgres-backup
+  name: my-mysql-backup
 spec:
   schedule: "5 */8 * * *"
   concurrencyPolicy: Replace
@@ -15,7 +15,7 @@ spec:
         spec:
           restartPolicy: OnFailure
           containers:
-          - name: postgres-backup-my-app
+          - name: mysql-backup-my-app
             image: backuptools/mysql-backup-s3
             env:
               - name: S3_URI
