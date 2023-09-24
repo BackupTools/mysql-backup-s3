@@ -12,7 +12,7 @@ Docker image to backup MySQL or MariaDB (or PerconaDB) database to S3 using mysq
 - [x] Can be run in Kubernetes or Docker
 - [x] Possibility to detect and backup all databases [testing]
 - [x] PGP encryption
-- [ ] TODO: Add other compression methods
+- [x] Available `COMPRESS=` methods: pigz, xz, bzip2, lrzip, brotli, zstd
 - [ ] TODO: Add other dbs (e.g. postgres, mysql)
 
 ## Configuration
@@ -24,8 +24,11 @@ MYSQL_USER=user
 MYSQL_PASSWORD=password
 MYSQL_HOST=host-or-service-name
 MYSQL_PORT=3307 # (optional) defaults to 3306
+MYSQL_MASTERDATA=2 # (optional) defaults to 0
 GPG_KEYSERVER=keyserver.ubuntu.com # your hpks keyserver
 GPG_KEYID=<key_id> # recipient key, backup will be encrypted if added
+COMPRESS=pigz # Available: pigz, xz, bzip2, lrzip, brotli, zstd
+COMPRESS_LEVEL=7 # (optional) Compression level of desired compression program defaults to 0
 ```
 
 Or see `docker-compose.yml` file to run this container with Docker.
@@ -33,3 +36,7 @@ Or see `docker-compose.yml` file to run this container with Docker.
 ## Cron backup with kubernetes
 
 See `kubernetes-cronjob.yml` file.
+
+## Changelog
+
+[2023-09-24] Switched to mysql-8 client due to compatibility issues with mariadb client.
