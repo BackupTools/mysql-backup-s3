@@ -39,4 +39,5 @@ See `kubernetes-cronjob.yml` file.
 
 ## Changelog
 
+[2025-03-14] Updated base docker image. Made dump compatible with mariadb (disable column stats).
 [2023-09-24] Switched to mysql-8 client due to compatibility issues with mariadb client.

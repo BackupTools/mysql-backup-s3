@@ -66,10 +66,10 @@ esac
 
 if [ -z "$GPG_KEYID" ]
 then
-        mysqldump -h ${MYSQL_HOST} -P ${MYSQL_PORT} -u ${MYSQL_USER} --password=${MYSQL_PASSWORD} --skip-add-locks --allow-keywords --master-data=${MYSQL_MASTERDATA} -A | $COMPRESS_CMD \
+        mysqldump -h ${MYSQL_HOST} -P ${MYSQL_PORT} -u ${MYSQL_USER} --password=${MYSQL_PASSWORD} --column-statistics=0 --single-transaction --allow-keywords --master-data=${MYSQL_MASTERDATA} -A | $COMPRESS_CMD \
          | mc pipe backup/${S3_BUCK}/${S3_NAME}-`date +%Y-%m-%d_%H-%M-%S`.mysql.sql${COMPRESS_POSTFIX} --insecure
 else
-        mysqldump -h ${MYSQL_HOST} -P ${MYSQL_PORT} -u ${MYSQL_USER} --password=${MYSQL_PASSWORD} --skip-add-locks --allow-keywords --master-data=${MYSQL_MASTERDATA} -A | $COMPRESS_CMD \
+        mysqldump -h ${MYSQL_HOST} -P ${MYSQL_PORT} -u ${MYSQL_USER} --password=${MYSQL_PASSWORD} --column-statistics=0 --single-transaction --allow-keywords --master-data=${MYSQL_MASTERDATA} -A | $COMPRESS_CMD \
          | gpg -z 0 --recipient ${GPG_KEYID} --trust-model always --encrypt | mc pipe backup/${S3_BUCK}/${S3_NAME}-`date +%Y-%m-%d_%H-%M-%S`.mysql.sql${COMPRESS_POSTFIX}.pgp --insecure
 fi
 
