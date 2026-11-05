@@ -30,4 +30,7 @@ spec:
                 value: password
               - name: MYSQL_HOST
                 value: host-or-service-name
+                # Available: pigz, xz, bzip2, lrzip, brotli, zstd
+              - name: COMPRESS
+                value: pigz
 ---
