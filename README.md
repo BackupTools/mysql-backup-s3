@@ -25,6 +25,7 @@ MYSQL_PASSWORD=password
 MYSQL_HOST=host-or-service-name
 MYSQL_PORT=3307 # (optional) defaults to 3306
 MYSQL_MASTERDATA=2 # (optional) defaults to 0
+MYSQLDUMP_ARGS="--ignore-table=db.table1 --ignore-table=db.table2" # (optional) extra mysqldump arguments
 GPG_KEYSERVER=keyserver.ubuntu.com # your hpks keyserver
 GPG_KEYID=<key_id> # recipient key, backup will be encrypted if added
 COMPRESS=pigz # Available: pigz, xz, bzip2, lrzip, brotli, zstd

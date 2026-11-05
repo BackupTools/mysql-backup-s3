@@ -30,3 +30,19 @@ tasks:
           echo "FAIL: test_table data not found in backup content"
           exit 1
         fi
+      - |
+        docker compose -f docker-compose.test.yml run --rm --no-deps \
+          -e S3_NAME=args-test/backup \
+          -e MYSQLDUMP_ARGS="--ignore-table=test_db.test_table --ignore-table=test_db.other_table" \
+          mysql-backup /entrypoint.sh
+        DUMP=$(docker compose -f docker-compose.test.yml run --rm --no-deps \
+          -e MC_HOST_backup=http://minio:minio123@minio:9000 \
+          mysql-backup sh -c \
+          'mc find backup/test-backup/args-test/ --insecure 2>/dev/null | head -1 | xargs mc cat --insecure | pigz -d')
+        echo "$DUMP" | grep -q "CREATE DATABASE.*\`test_db\`" \
+          || (echo "FAIL: test_db not found with MYSQLDUMP_ARGS" && exit 1)
+        if echo "$DUMP" | grep -q "\`test_table\`"; then
+          echo "FAIL: test_table found, MYSQLDUMP_ARGS not applied"
+          exit 1
+        fi
+        echo "PASS: MYSQLDUMP_ARGS applied"
