@@ -7,7 +7,7 @@ RUN apt update && apt install -y wget gnupg pigz pbzip2 xz-utils lrzip brotli zs
         && apt update && apt install -y mysql-client \
         && apt remove -y wget && apt autoremove -y && apt-get clean && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/* mysql*
 
-COPY --from=minio/mc /usr/bin/mc /usr/local/bin/mc
+COPY --from=pgsty/mc:RELEASE.2026-10-26T00-00-00Z /usr/bin/mc /usr/local/bin/mc
 
 COPY entrypoint.sh .
 ENTRYPOINT ["/entrypoint.sh"]
