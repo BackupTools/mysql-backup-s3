@@ -13,6 +13,7 @@ get_date () {
 : ${MYSQL_USER:?'Specify a MYSQL_USER variable'}
 : ${MYSQL_PASSWORD:?'You must specify the MYSQL_PASSWORD variable'}
 : ${MYSQL_MASTERDATA:='0'}
+: ${MYSQLDUMP_ARGS:=''}
 : ${GPG_KEYSERVER:='keyserver.ubuntu.com'}
 : ${GPG_KEYID:=''}
 : ${COMPRESS:='pigz'}
@@ -67,10 +68,10 @@ esac
 
 if [ -z "$GPG_KEYID" ]
 then
-        mysqldump -h ${MYSQL_HOST} -P ${MYSQL_PORT} -u ${MYSQL_USER} --password=${MYSQL_PASSWORD} --column-statistics=0 --single-transaction --allow-keywords --master-data=${MYSQL_MASTERDATA} -A | $COMPRESS_CMD \
+        mysqldump -h ${MYSQL_HOST} -P ${MYSQL_PORT} -u ${MYSQL_USER} --password=${MYSQL_PASSWORD} --column-statistics=0 --single-transaction --allow-keywords --master-data=${MYSQL_MASTERDATA} ${MYSQLDUMP_ARGS} -A | $COMPRESS_CMD \
          | mc pipe backup/${S3_BUCK}/${S3_NAME}-`date +%Y-%m-%d_%H-%M-%S`.mysql.sql${COMPRESS_POSTFIX} --insecure
 else
-        mysqldump -h ${MYSQL_HOST} -P ${MYSQL_PORT} -u ${MYSQL_USER} --password=${MYSQL_PASSWORD} --column-statistics=0 --single-transaction --allow-keywords --master-data=${MYSQL_MASTERDATA} -A | $COMPRESS_CMD \
+        mysqldump -h ${MYSQL_HOST} -P ${MYSQL_PORT} -u ${MYSQL_USER} --password=${MYSQL_PASSWORD} --column-statistics=0 --single-transaction --allow-keywords --master-data=${MYSQL_MASTERDATA} ${MYSQLDUMP_ARGS} -A | $COMPRESS_CMD \
          | gpg -z 0 --recipient ${GPG_KEYID} --trust-model always --encrypt | mc pipe backup/${S3_BUCK}/${S3_NAME}-`date +%Y-%m-%d_%H-%M-%S`.mysql.sql${COMPRESS_POSTFIX}.pgp --insecure
 fi
 
