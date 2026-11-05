@@ -2,7 +2,7 @@
 
 [![Build status](https://github.com/BackupTools/mysql-backup-s3/workflows/Docker%20Image%20CI/badge.svg)]() [![Pulls](https://img.shields.io/docker/pulls/backuptools/mysql-backup-s3?style=flat&labelColor=1B3D4B&color=06A64F&logoColor=white&logo=docker&label=pulls)]()
 
-Docker image to backup MySQL or MariaDB (or PerconaDB) database to S3 using mysqldump and compress using pigz.
+Docker image to backup MySQL or MariaDB (or PerconaDB) database to S3 using mysqldump and compress using pigz(default), xz, bzip2, lrzip, brotli, zstd.
 
 ## Advantages/features
 - [x] Supports custom S3 endpoints (e.g. minio)
@@ -38,7 +38,12 @@ Or see `docker-compose.yml` file to run this container with Docker.
 
 See `kubernetes-cronjob.yml` file.
 
+## Testing
+
+Run `task test` (needs Docker and [Task](https://taskfile.dev)).
+
 ## Changelog
 
+[2026-11-06] Updated base image to ubuntu 24.04, multiarch (amd64/arm64). Switched from minio to silo. Added `MYSQLDUMP_ARGS`.
 [2025-03-14] Updated base docker image. Made dump compatible with mariadb (disable column stats).
 [2023-09-24] Switched to mysql-8 client due to compatibility issues with mariadb client.
