@@ -23,7 +23,7 @@ services:
     command: "/bin/sh -c 'while :; do sleep 10s && ./entrypoint.sh; done'"
 
   minio:
-    image: minio/minio
+    image: pgsty/silo:RELEASE.2026-10-26T00-00-00Z
     volumes:
       - minio_data:/data
     environment:
