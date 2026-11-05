@@ -1,6 +1,11 @@
 version: '3'
 
 tasks:
+  build:
+    desc: "Build linux/amd64+linux/arm64 locally (no push)"
+    cmds:
+      - docker buildx build --platform linux/amd64,linux/arm64 --progress=plain .
+
   test:
     desc: "Integration test: build, run backup against mysql+minio, assert success"
     cmds:
